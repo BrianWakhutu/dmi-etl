@@ -17,6 +17,12 @@ select
 	mortality.number_sars_cov_2_tested,
 	mortality.number_sars_cov_2_positive,
 	mortality.number_sars_cov_2_negative,
+	mortality.number_rsv_tested,
+	mortality.number_rsv_positive,
+	mortality.number_rsv_negative,
+	mortality.number_flu_tested,
+	mortality.number_flu_positive,
+	mortality.number_flu_negative,
 	cast(current_date as date) as load_date
 from {{ ref('fct_aggregate_mortality_survillence') }} as mortality
 left join {{ ref('dim_facility') }} as facility on facility.facility_key = mortality.facility_key
