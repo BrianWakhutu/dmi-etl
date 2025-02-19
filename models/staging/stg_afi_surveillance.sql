@@ -4,13 +4,11 @@ SELECT
   pid, 
   NULLIF(screening_interviewdate, '')::DATE AS screening_interviewdate,
   -- Ensure proper integer conversion for screeningpoint
-
   (screeningpoint::NUMERIC):: INTEGER as screeningpoint,
   -- Handle NULLs or empty strings for eligible
   CASE WHEN eligible ~ '^\d+$' THEN eligible::INTEGER ELSE NULL END AS eligible,  
   -- Handle NULLs or empty strings for gender
     (gender::NUMERIC):: INTEGER as gender,
-
   -- Handle consent as integer
   CASE WHEN consent ~ '^\d+$' THEN consent::INTEGER ELSE NULL END AS consent,  
   non_enr_reason, 
@@ -74,7 +72,6 @@ SELECT
  -- CASE WHEN calculated_age_days ~ '^\d+(\.\d+)?$' THEN ROUND(calculated_age_days::DECIMAL) ELSE NULL END AS calculated_age_days,  
    (calculated_age_days::NUMERIC):: INTEGER as calculated_age_days,
   diagnosisother 
-
 FROM   {{source('central_raw_afi', 'afi_surveillance_table')}}
 
 
