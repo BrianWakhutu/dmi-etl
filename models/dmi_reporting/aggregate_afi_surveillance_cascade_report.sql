@@ -15,7 +15,7 @@ select
 	eligible_sampling,
 	sampled,
     cast(current_date as date) as load_date
-from {{ ref('fct_afi_surveillance_aggregate_cascade') }} as cascade
+from {{ ref('fct_aggregate_afi_surveillance_cascade') }} as cascade
 left join {{ ref('dim_gender') }} as gender on gender.gender_key = cascade.gender_key 
 left join {{ ref('dim_age_group_afi') }} as age_group on age_group.age_group_key = cascade.age_group_key
 left join {{ ref('dim_facility') }} as facility on facility.facility_key = cascade.facility_key

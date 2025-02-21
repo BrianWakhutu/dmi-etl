@@ -1,6 +1,3 @@
-
-
-
 WITH screeningpoint_data AS (
   SELECT DISTINCT   
         {{ dbt_utils.surrogate_key(['screeningpoint']) }} AS screeningpoint_key,
@@ -11,7 +8,6 @@ WITH screeningpoint_data AS (
             WHEN 3 THEN 'Accident & Emergency'
             WHEN 4 THEN 'Isolation'
             WHEN 5 THEN 'Other'
-
         END AS screeningpoint_description
   FROM dbt_shield_dev.stg_afi_surveillance 
   WHERE screeningpoint IN (1, 2, 3, 4, 5)

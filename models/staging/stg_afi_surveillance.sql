@@ -1,77 +1,60 @@
-SELECT 
-  "Unique_ID", 
-  "source", 
-  pid, 
-  NULLIF(screening_interviewdate, '')::DATE AS screening_interviewdate,
-  -- Ensure proper integer conversion for screeningpoint
-  (screeningpoint::NUMERIC):: INTEGER as screeningpoint,
-  -- Handle NULLs or empty strings for eligible
-  CASE WHEN eligible ~ '^\d+$' THEN eligible::INTEGER ELSE NULL END AS eligible,  
-  -- Handle NULLs or empty strings for gender
-    (gender::NUMERIC):: INTEGER as gender,
-  -- Handle consent as integer
-  CASE WHEN consent ~ '^\d+$' THEN consent::INTEGER ELSE NULL END AS consent,  
-  non_enr_reason, 
-  -- Handle exactfeverdays as integer
-  CASE WHEN exactfeverdays ~ '^\d+$' THEN exactfeverdays::INTEGER ELSE NULL END AS exactfeverdays,  
-  NULLIF(enr_interviewdate, '')::DATE AS enr_interviewdate,
-  -- Handle high_temp_recorded as DECIMAL
-  CASE WHEN high_temp_recorded ~ '^\d+(\.\d+)?$' THEN high_temp_recorded::DECIMAL ELSE NULL END AS high_temp_recorded,  
-  -- Handle diagnosis as integer
-  CASE WHEN diagnosis ~ '^\d+$' THEN diagnosis::INTEGER ELSE NULL END AS diagnosis,  
-  discharge_diagnosis, 
-  causeofdeathother, 
-  -- Handle outcome as integer
-  CASE WHEN outcome ~ '^\d+$' THEN outcome::INTEGER ELSE NULL END AS outcome,  
-  proposed_combined_case, 
-  -- Handle sampled as integer
-  CASE WHEN sampled ~ '^\d+$' THEN sampled::INTEGER ELSE NULL END AS sampled,  
-  swabsamplebarcodes, 
-  NULLIF(swabspecimencolldate, '')::DATE AS swabspecimencolldate,
-  NULLIF(sars_datereceived, '')::DATE AS sars_datereceived,
-  NULLIF(sars_datetested, '')::DATE AS sars_datetested,
-  -- Handle swab_tat_receiving as DECIMAL
-  CASE WHEN swab_tat_receiving ~ '^\d+(\.\d+)?$' THEN swab_tat_receiving::DECIMAL ELSE NULL END AS swab_tat_receiving,  
-  -- Handle swab_tat_testing as DECIMAL
-  CASE WHEN swab_tat_testing ~ '^\d+(\.\d+)?$' THEN swab_tat_testing::DECIMAL ELSE NULL END AS swab_tat_testing,  
-  fluresult, 
-  rsvresult, 
-  sc2result, 
-  wholebloodbarcode, 
-  -- Handle tac_tat_receiving as DECIMAL
-  CASE WHEN tac_tat_receiving ~ '^\d+(\.\d+)?$' THEN tac_tat_receiving::DECIMAL ELSE NULL END AS tac_tat_receiving,  
-  -- Handle tac_tat_testing as DECIMAL
-  CASE WHEN tac_tat_testing ~ '^\d+(\.\d+)?$' THEN tac_tat_testing::DECIMAL ELSE NULL END AS tac_tat_testing,  
-  "Target", 
-  "TacResult", 
-  "PCR_MalariaSpecies", 
-  "TACmalariaResult", 
-  malariasmear_barcode, 
-  -- Handle smear_tat_receiving as DECIMAL
-  CASE WHEN smear_tat_receiving ~ '^\d+(\.\d+)?$' THEN smear_tat_receiving::DECIMAL ELSE NULL END AS smear_tat_receiving,  
-  -- Handle read1_tat_testing as DECIMAL
-  CASE WHEN read1_tat_testing ~ '^\d+(\.\d+)?$' THEN read1_tat_testing::DECIMAL ELSE NULL END AS read1_tat_testing,  
-  -- Handle read2_tat_testing as DECIMAL
-  CASE WHEN read2_tat_testing ~ '^\d+(\.\d+)?$' THEN read2_tat_testing::DECIMAL ELSE NULL END AS read2_tat_testing,  
-  -- Handle read1_result as INTEGER
-  CASE WHEN read1_result ~ '^\d+$' THEN read1_result::INTEGER ELSE NULL END AS read1_result,  
-  -- Handle read2_result as INTEGER
-  CASE WHEN read2_result ~ '^\d+$' THEN read2_result::INTEGER ELSE NULL END AS read2_result,  
-  "Read_1_2_outcome", 
-  con_dis_check, 
-  -- Handle Final_Result as INTEGER
-  CASE WHEN "Final_Result" ~ '^\d+$' THEN "Final_Result"::INTEGER ELSE NULL END AS "Final_Result",  
-  malariardt_barcode, 
-  -- Handle malariardtres as INTEGER
-  CASE WHEN malariardtres ~ '^\d+$' THEN malariardtres::INTEGER ELSE NULL END AS malariardtres,  
-  malariares, 
-  serum_barcode, 
-  -- Handle site as INTEGER
-    (site::NUMERIC):: INTEGER as site,
-  -- Handle calculated_age_days as DECIMAL, and round it to integer
- -- CASE WHEN calculated_age_days ~ '^\d+(\.\d+)?$' THEN ROUND(calculated_age_days::DECIMAL) ELSE NULL END AS calculated_age_days,  
-   (calculated_age_days::NUMERIC):: INTEGER as calculated_age_days,
-  diagnosisother 
+SELECT "Unique_ID",
+  "source",
+       pid,
+        screening_interviewdate::DATE as screening_date ,
+       ROUND(screeningpoint:: NUMERIC) :: INT as screeningpoint,
+        eligible::INT as eligible,
+         ROUND(gender:: numeric)::INT as gender,
+            case
+	when consent = '<NA>' then 99
+	-- Replace '<NA>' with 99
+	else consent::INT
+end as consent,
+          non_enr_reason,
+           ROUND(exactfeverdays::numeric) :: INT as exactfeverdays,
+               enr_interviewdate::DATE as enr_interviewdate,
+                 high_temp_recorded::DECIMAL as high_temp_recorded,
+-- Convert to DECIMAL
+diagnosis,
+       discharge_diagnosis,
+       causeofdeathother,
+         outcome::INT as outcome,
+-- Convert to INT
+proposed_combined_case,
+              sampled::INT as sampled,
+              swabsamplebarcodes,
+               swabspecimencolldate::DATE as swabspecimencolldate,
+               sars_datereceived::DATE as sars_datereceived,
+                sars_datetested::DATE as sars_datetested,
+                  swab_tat_receiving::DECIMAL as swab_tat_receiving,
+                        swab_tat_testing::DECIMAL as swab_tat_testing,
+                    fluresult,
+       rsvresult,
+       sc2result,
+       wholebloodbarcode,
+       tac_tat_receiving::DECIMAL as tac_tat_receiving,
+      tac_tat_testing::DECIMAL as tac_tat_testing,
+      "Target",
+             "TacResult",
+       "PCR_MalariaSpecies",
+       "TACmalariaResult",
+       malariasmear_barcode,
+       smear_tat_receiving::DECIMAL as smear_tat_receiving,
+       read1_tat_testing::DECIMAL as read1_tat_testing,
+       read2_tat_testing::DECIMAL as read2_tat_testing,
+       read3_tat_testing::DECIMAL as read3_tat_testing,
+       read1_result::DECIMAL as read1_result,
+       read2_result::DECIMAL as read2_result,
+         "Read_1_2_outcome",
+       con_dis_check,
+       "Final_Result",
+       malariardt_barcode,
+        malariardtres::INTEGER as malariardtres,
+       malariares::INTEGER as malariares,
+       serum_barcode,
+       site ::INTEGER as site,
+        ROUND(calculated_age_days:: numeric)::INT as calculated_age_days,
+       diagnosisother
 FROM   {{source('central_raw_afi', 'afi_surveillance_table')}}
 
 
