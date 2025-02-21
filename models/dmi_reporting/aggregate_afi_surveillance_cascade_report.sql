@@ -9,6 +9,7 @@ select
     date.date,
     date.month,
     date.year,
+    date.calendarquarter,
     screened,
 	eligible,
 	enrolled,
