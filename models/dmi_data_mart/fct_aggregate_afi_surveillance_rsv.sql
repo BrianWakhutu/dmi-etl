@@ -8,7 +8,7 @@ select
     CASE when  consent=1 then 1 else 0 end as enrolled,
     site::int as mflcode
 from  {{ ref('stg_afi_surveillance') }} as afi_data_rsv 
-left join {{ ref('dim_lab_result') }} as result on result.lab_result_2 = afi_data_rsv.sc2result 
+left join {{ ref('dim_lab_result') }} as result on result.lab_result_2 = afi_data_rsv.rsvresult 
 
 -- Joining gender dimension
 LEFT JOIN {{ ref('dim_gender') }} AS gender 
