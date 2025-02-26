@@ -1,4 +1,4 @@
-# Mumo's dbt project
+# DMI dbt project
 Contains dbt models for transformations
 
 ## Setting up locally
