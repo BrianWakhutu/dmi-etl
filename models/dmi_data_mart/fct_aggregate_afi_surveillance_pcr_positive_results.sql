@@ -1,5 +1,6 @@
 with sub_set_data as (
 	select 
+    distinct
 		"Unique_ID",
 		pid,
 		target,

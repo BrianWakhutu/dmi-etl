@@ -21,6 +21,9 @@ SELECT
     "Unique_ID",
     pid,
     CASE WHEN Target IN ('P. vivax', 'P. falciparum') THEN 'Plasmodium'
+
+
+    
          WHEN Target  =  'S. Typhi' THEN 'Salmonella'
          WHEN Target = 'C. burnetii' THEN 'C.burnetii'
          WHEN Target = 'Dengue' THEN 'Dengue fever'
