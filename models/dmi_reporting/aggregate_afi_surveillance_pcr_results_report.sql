@@ -8,6 +8,7 @@ SELECT gender.gender_2 as gender,
     date.date,
     disease as disease,
     positive_results.no_of_cases,
+    pid,
     cast(current_date as date) as load_date
 from {{ ref('fct_aggregate_afi_surveillance_pcr_positive_results') }} as positive_results
 left join {{ ref('dim_gender') }} as gender on gender.gender_key = positive_results.gender_key 
