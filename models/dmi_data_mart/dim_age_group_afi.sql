@@ -5,7 +5,7 @@ WITH age_group_data AS (
         end_age_days,
         
     CASE 
-        WHEN start_age_days > 0 and start_age_days < 365 THEN '0 - < 1yr'
+        WHEN start_age_days >= 0 and start_age_days < 365 THEN '0 - < 1yr'
         WHEN start_age_days >= 365 AND start_age_days < 730 THEN '1 - < 2yrs'
         WHEN start_age_days >= 730 AND start_age_days < 1825 THEN '2 - < 5yrs'
         WHEN start_age_days >= 1825 AND start_age_days < 6205 THEN '5 - 17yrs'
