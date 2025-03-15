@@ -5,7 +5,6 @@ WITH malaria_tac_pcr_results AS (
      tac_mm.gender,
      tac_mm.calculated_age_days,
      tac_mm.enr_interviewdate,
-
        CASE WHEN tac_mm."TacResult" = 'Positive' THEN 1 
           WHEN tac_mm."TacResult" = 'Negative' THEN 2 
           ELSE NULL END AS tac_result,
@@ -16,7 +15,6 @@ WITH malaria_tac_pcr_results AS (
    FROM {{ ref('stg_afi_surveillance') }} AS tac_mm
    WHERE tac_mm.consent = 1 and  tac_mm."TacResult" is not null 
 )
-
 SELECT 
   COALESCE(gender.gender_key, 'unset') AS gender_key,
   COALESCE(age_group.age_group_key, 'unset') AS age_group_key,
@@ -28,9 +26,7 @@ SELECT
   enrolled AS enrolled,
   PID,
   current_date AS load_date
-
 FROM malaria_tac_pcr_results
-
 LEFT JOIN {{ ref('dim_gender') }} AS gender 
   ON gender.code = malaria_tac_pcr_results.gender
 LEFT JOIN {{ ref('dim_age_group_afi') }} AS age_group 
