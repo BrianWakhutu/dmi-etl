@@ -25,7 +25,7 @@ with base as (
         f.facility_name,
         f.county as facility_county,
         f.sub_county as facility_subcounty,
-        f.ward,
+     
 
         -- Reporting geography
         coalesce(f.county, s.county, 'Unknown') as county,
@@ -52,7 +52,7 @@ with base as (
     left join {{ ref('dim_emr') }} e
         on c.emr_id = e.emr_id
 
-    left join {{ ref('dim_emr_facility') }} f
+    left join {{ ref('dim_emr_implementing_facility') }} f
         on c.mfl_code = f.facility_code::text
 
     left join {{ ref('dim_date') }} d
